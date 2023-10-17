@@ -1,24 +1,51 @@
 name: Trello integration
+# on:
+#   pull_request:
+#     types:
+#       [opened, edited, closed, reopened, ready_for_review, converted_to_draft]
+#     branches: [main]
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: rematocorp/trello-integration-action@v7.0.1
+#         with:
+#           github-token: ${{ secrets.GITHUB_TOKEN }}
+#           github-require-keyword-prefix: false # When true match only URLs prefixed with “Closes” etc just like https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword
+#           github-require-trello-card: false # Throw an error if no Trello cards can be found in the PR description
+#           trello-api-key: 1c13963982b9c6b4dfe53fc4307403de # https://trello.com/app-key
+#           trello-auth-token: ATTA16fdef5c39f6d324c8dd85ce9e1f30864345afa8b3b3b3ea6723d88e044c4f5a1CAC5341 # https://trello.com/app-key then click generate a token
+#           trello-organization-name: ByteTactix # Your organization name to avoid assigning cards to outside members, edit your workspace details and look for the short name
+#           trello-board-id: 652ec96f34bfd3395927e3f9 # Trello board ID where to move the cards
+#           trello-list-id-pr-draft: 652ec96f92d2c59f1a730497 # Trello list ID for draft pull request (useful when you want to move the card back to In progress when ready PR is converted to draft)
+#           trello-list-id-pr-open: 652ec96f68e604a63b557e8d # Trello list ID for open pull request
+#           trello-list-id-pr-closed: 652ec96facc3977b786ff1c7 # Trello list ID for closed pull request
+#           trello-conflicting-labels: 'feature;bug;chore' # When a card has one of these labels then branch category label is not assigned
+#           trello-card-in-branch-name: false # When true search for card name (e.g. "1234-card-title") in the branch name if card URL is not found in PR description or comments. If card id is found from branch then adds a comment with the card URL.
+
 on:
   pull_request:
-    types:
-      [opened, edited, closed, reopened, ready_for_review, converted_to_draft]
-    branches: [main]
+    types: [opened, synchronize, reopened]
+    #types: closed #for merged or just closed PRs
+    branches:
+      - main
+
 jobs:
-  build:
+  move_card_when_pull_request_merged_job:
     runs-on: ubuntu-latest
+    name: Move Trello Card to Needs review when Card refers to the issue referred by PR
     steps:
-      - uses: rematocorp/trello-integration-action@v7.0.1
+      - name: Call trello-github-actions
+        id: call-trello-github-actions
+        uses: Yleisradio/github-action-trello-integration@v1.1.0
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          github-require-keyword-prefix: false # When true match only URLs prefixed with “Closes” etc just like https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword
-          github-require-trello-card: false # Throw an error if no Trello cards can be found in the PR description
-          trello-api-key: 1c13963982b9c6b4dfe53fc4307403de # https://trello.com/app-key
-          trello-auth-token: ATTA16fdef5c39f6d324c8dd85ce9e1f30864345afa8b3b3b3ea6723d88e044c4f5a1CAC5341 # https://trello.com/app-key then click generate a token
-          trello-organization-name: ByteTactix # Your organization name to avoid assigning cards to outside members, edit your workspace details and look for the short name
-          trello-board-id: 652ec96f34bfd3395927e3f9 # Trello board ID where to move the cards
-          trello-list-id-pr-draft: 652ec96f92d2c59f1a730497 # Trello list ID for draft pull request (useful when you want to move the card back to In progress when ready PR is converted to draft)
-          trello-list-id-pr-open: 652ec96f68e604a63b557e8d # Trello list ID for open pull request
-          trello-list-id-pr-closed: 652ec96facc3977b786ff1c7 # Trello list ID for closed pull request
-          trello-conflicting-labels: 'feature;bug;chore' # When a card has one of these labels then branch category label is not assigned
-          trello-card-in-branch-name: false # When true search for card name (e.g. "1234-card-title") in the branch name if card URL is not found in PR description or comments. If card id is found from branch then adds a comment with the card URL.
+          action: pull_request_event_move_card
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TRELLO_API_KEY: 1c13963982b9c6b4dfe53fc4307403de
+          TRELLO_API_TOKEN: ATTA16fdef5c39f6d324c8dd85ce9e1f30864345afa8b3b3b3ea6723d88e044c4f5a1CAC5341
+          TRELLO_BOARD_ID: 652ec96f34bfd3395927e3f9
+          # List "In progress"
+          TRELLO_SOURCE_LIST_ID: 652ec96f68e604a63b557e8d
+          # List "Needs review"
+          TRELLO_TARGET_LIST_ID: 652ec96facc3977b786ff1c7
