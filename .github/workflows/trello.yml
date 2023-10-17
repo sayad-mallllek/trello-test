@@ -25,7 +25,7 @@ name: Trello integration
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, edited, synchronize, reopened]
     #types: closed #for merged or just closed PRs
     branches:
       - main
