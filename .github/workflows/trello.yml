@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: rematocorp/trello-integration-action@v7
+      - uses: rematocorp/trello-integration-action@v7.0.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           trello-api-key: 1c13963982b9c6b4dfe53fc4307403de # https://trello.com/app-key
