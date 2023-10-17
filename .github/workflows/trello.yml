@@ -13,8 +13,8 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-require-keyword-prefix: false # When true match only URLs prefixed with “Closes” etc just like https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword
           github-require-trello-card: false # Throw an error if no Trello cards can be found in the PR description
-          trello-api-key: ATTA16fdef5c39f6d324c8dd85ce9e1f30864345afa8b3b3b3ea6723d88e044c4f5a1CAC5341 # https://trello.com/app-key
-          trello-auth-token: ATATT3xFfGF0AfrL2MjG8yB8MPQcctM2tUyv3vuLpDZQc7BuZhENCU9pVX-u66HRXpVtYCoMwkuimX_X6qafoTGMOQ1B6R-Wli9Yso7n-bdgTIuYdR2H-9Bi-zyqv2Ka86sdbiae0qx_PohJ5jhLQ_I_42sF3EGKPRqizSg-3UkMv-cqrEOB3hM=A1FAC185 # https://trello.com/app-key then click generate a token
+          trello-api-key: 1c13963982b9c6b4dfe53fc4307403de # https://trello.com/app-key
+          trello-auth-token: ATTA16fdef5c39f6d324c8dd85ce9e1f30864345afa8b3b3b3ea6723d88e044c4f5a1CAC5341 # https://trello.com/app-key then click generate a token
           trello-organization-name: ByteTactix # Your organization name to avoid assigning cards to outside members, edit your workspace details and look for the short name
           trello-board-id: 652ec96f34bfd3395927e3f9 # Trello board ID where to move the cards
           trello-list-id-pr-draft: 652ec96f92d2c59f1a730497 # Trello list ID for draft pull request (useful when you want to move the card back to In progress when ready PR is converted to draft)
