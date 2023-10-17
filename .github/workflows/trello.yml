@@ -37,7 +37,7 @@ jobs:
     steps:
       - name: Call trello-github-actions
         id: call-trello-github-actions
-        uses: maliyogames/github-action-trello-integration
+        uses: maliyogames/github-action-trello-integration@v1.3.4
         with:
           action: pull_request_event_move_card
         env:
