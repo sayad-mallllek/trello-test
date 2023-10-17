@@ -8,18 +8,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
-      - uses: dalezak/github-commit-to-trello-card@main
-        with:
-          trello-api-key: 1c13963982b9c6b4dfe53fc4307403de
-          trello-auth-token: ATTA16fdef5c39f6d324c8dd85ce9e1f30864345afa8b3b3b3ea6723d88e044c4f5a1CAC5341
-          trello-board-id: 652ec96f34bfd3395927e3f9
-          trello-card-action: 'Attachment'
-          trello-list-name-commit: 'To Do'
-          trello-list-name-pr-open: 'In Progress'
-          trello-list-name-pr-closed: 'Done'
-
       - uses: rematocorp/trello-integration-action@v7.0.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
