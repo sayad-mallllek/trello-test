@@ -8,14 +8,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: rematocorp/trello-integration-action@v7.0.1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          trello-api-key: 1c13963982b9c6b4dfe53fc4307403de # https://trello.com/app-key
-          trello-auth-token: ATTA16fdef5c39f6d324c8dd85ce9e1f30864345afa8b3b3b3ea6723d88e044c4f5a1CAC5341 # https://trello.com/app-key then click generate a token
-          trello-organization-name: ByteTactix # Your organization name to avoid assigning cards to outside members, edit your workspace details and look for the short name
-          trello-board-id: 652ec96f34bfd3395927e3f9 # Trello board ID where to move the cards
       - uses: rematocorp/trello-integration-action@v7.0.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
